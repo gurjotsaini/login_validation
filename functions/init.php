@@ -15,10 +15,10 @@
         // Checking Database Connection
         if (!$con) {
             echo "Connection Failed";
-        } else {
-            echo "Connected";
         }
 
     // Including Important Files
     require_once "db_functions.php";
     require_once "functions.php";
+    require_once "validation_functions.php";
+

@@ -16,6 +16,7 @@
             $password           = clean($_POST['password']);
             $confirmPassword    = clean($_POST['confirm_password']);
 
+            // Check if the field is empty or not
             $errors[] = isEmpty($firstName,"First Name");
             $errors[] = isEmpty($lastName,"Last Name");
             $errors[] = isEmpty($username,"Username");
@@ -23,11 +24,13 @@
             $errors[] = isEmpty($password,"Password");
             $errors[] = isEmpty($confirmPassword,"Confirm Password");
 
+            // Check minimum length of the value
             $errors[] = isMinimum($firstName, "First Name", $min);
             $errors[] = isMinimum($lastName, "Last Name", $min);
             $errors[] = isMinimum($username, "Username", $min);
             $errors[] = isMinimum($password, "Password", $min);
 
+            // Check maximum length of the value
             $errors[] = isMaximum($firstName, "First Name", $max);
             $errors[] = isMaximum($lastName, "Last Name", $max);
             $errors[] = isMaximum($username, "Username", $max);
@@ -39,12 +42,10 @@
 
             if (emailExists($email)) {
                 $errors[] = "Sorry, Email is already registered!" . "<br />";
-
             }
 
             if (usernameExists($username)) {
                 $errors[] = "Sorry, Username is already taken!" . "<br />";
-
             }
 
             if (!empty($errors)) {
@@ -60,6 +61,10 @@
                 }
 
                 echo '</div>';
+            } else {
+                if (registerUser($firstName, $lastName, $username, $email, $password)) {
+                    echo "USER REGISTERED!";
+                }
             }
         }
     } // validateRegistration();
@@ -80,5 +85,11 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
         $validationCode = md5($username . microtime());
 
         $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)";
+        $sql .= " VALUES('$firstName', '$lastName', '$username', '$email', '$password', '$validationCode', 0)";
+
+        $result = query($sql);
+        confirmQuery($result);
+
+        return true;
     }
 }

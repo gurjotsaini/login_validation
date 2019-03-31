@@ -3,7 +3,7 @@
      * Created by User: gurjot
      */
 
-    function validateUserRegistration() {
+    function validateRegistration() {
         $errors = [];
         $min    = 3;
         $max    = 20;
@@ -16,52 +16,69 @@
             $password           = clean($_POST['password']);
             $confirmPassword    = clean($_POST['confirm_password']);
 
-            if (empty($firstName)) {
-                $errors[] = "First Name cannot be empty";
+            $errors[] = isEmpty($firstName,"First Name");
+            $errors[] = isEmpty($lastName,"Last Name");
+            $errors[] = isEmpty($username,"Username");
+            $errors[] = isEmpty($email,"Email");
+            $errors[] = isEmpty($password,"Password");
+            $errors[] = isEmpty($confirmPassword,"Confirm Password");
+
+            $errors[] = isMinimum($firstName, "First Name", $min);
+            $errors[] = isMinimum($lastName, "Last Name", $min);
+            $errors[] = isMinimum($username, "Username", $min);
+            $errors[] = isMinimum($password, "Password", $min);
+
+            $errors[] = isMaximum($firstName, "First Name", $max);
+            $errors[] = isMaximum($lastName, "Last Name", $max);
+            $errors[] = isMaximum($username, "Username", $max);
+            $errors[] = isMaximum($password, "Password", $max);
+
+            if ($password !== $confirmPassword) {
+                $errors[] = "Your password fields don't match." . "<br />";
             }
 
-            if (empty($lastName)) {
-                $errors[] = "Last Name cannot be empty";
+            if (emailExists($email)) {
+                $errors[] = "Sorry, Email is already registered!" . "<br />";
+
             }
 
-            if (empty($email)) {
-                $errors[] = "Email cannot be empty";
-            }
+            if (usernameExists($username)) {
+                $errors[] = "Sorry, Username is already taken!" . "<br />";
 
-            if (strlen($firstName) < $min) {
-                $errors[] = "First Name cannot be less than {$min} characters.";
-            }
-
-            if (strlen($lastName) < $min) {
-                $errors[] = "Last Name cannot be less than {$min} characters.";
-            }
-
-            if (strlen($firstName) > $max) {
-                $errors[] = "First Name cannot be more than {$max} characters.";
-            }
-
-            if (strlen($lastName) > $max) {
-                $errors[] = "Last Name cannot be more than {$max} characters.";
             }
 
             if (!empty($errors)) {
-                foreach ($errors as $error) {
-                    echo '<div class="alert alert-dark alert-dismissible" role="alert">
-                            <strong>Warning!</strong> ' . $error .
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                         </div>';
-//$message = <<<DELIMITER
-//<div class="alert alert-danger alert-dismissible" role="alert">
-//    <strong>Warning!</strong> $error
-//    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-//        <span aria-hidden="true">&times;</span>
-//    </button>
-//</div>
-//DELIMITER;
-//echo $message;
+                            <h4 class="alert-heading">Warning!</h4>
+                            ';
+
+                foreach ($errors as $error) {
+                    echo $error;
                 }
+
+                echo '</div>';
             }
         }
+    } // validateRegistration();
+
+function registerUser($firstName, $lastName, $username, $email, $password) {
+    $firstName  = escape($firstName);
+    $lastName   = escape($lastName);
+    $username   = escape($username);
+    $email      = escape($email);
+    $password   = escape($password);
+
+    if (emailExists($email)) {
+        return false;
+    } elseif (usernameExists($username)) {
+        return false;
+    } else {
+        $password = md5($password);
+        $validationCode = md5($username . microtime());
+
+        $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)";
     }
+}

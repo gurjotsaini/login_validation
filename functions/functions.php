@@ -37,7 +37,6 @@
 
         if (strlen($inputName) < $minimumValue) {
             $errors[] = "'{$placeholderName}' cannot be less than {$minimumValue} characters." . "<br />";
-
         }
 
         if (!empty($errors)) {

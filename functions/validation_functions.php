@@ -94,7 +94,8 @@
                 echo '</div>';
             } else {
                  if (registerUser($firstName, $lastName, $username, $email, $password)) {
-                     echo "USER REGISTERED!";
+                     setMessage("<p class='bg-success text-center'>Please check your email or span folder for activation link</p>");
+                     redirect("index.php");
                  }
             }
         }
@@ -121,6 +122,18 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
         $result = query($sql);
         confirmQuery($result);
 
+        $subject = "Activate Account";
+        $message = "Please click the link below to activate your account
+        https://loginvalidation.work:8890/activate.php?email=$email&code=$validationCode";
+        $headers = "From: noreply@website.com";
+        
+        sendMail($email, $subject, $message, $headers);
+
         return true;
     }
+} // registerUser();
+
+function sendMail($email, $subject, $message, $headers)
+{
+    return mail($email, $subject, $message, $headers);
 }

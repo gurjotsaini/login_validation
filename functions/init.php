@@ -9,6 +9,9 @@
     // Starting Session
     session_start();
 
+    //Requiring the php settings file
+    require_once 'runtime_config.php';
+
     // Including Database Config File
     require_once "config.php";
 

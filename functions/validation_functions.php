@@ -4,9 +4,9 @@
      */
 
     function validateRegistration() {
-        $errors = [];
-        $min    = 3;
-        $max    = 20;
+        $errors         = [];
+        $minimumValue   = 3;
+        $maximumValue   = 20;
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $firstName          = clean($_POST['first_name']);
@@ -17,33 +17,64 @@
             $confirmPassword    = clean($_POST['confirm_password']);
 
             // Check if the field is empty or not
-            $errors[] = isEmpty($firstName,"First Name");
-            $errors[] = isEmpty($lastName,"Last Name");
-            $errors[] = isEmpty($username,"Username");
-            $errors[] = isEmpty($email,"Email");
-            $errors[] = isEmpty($password,"Password");
-            $errors[] = isEmpty($confirmPassword,"Confirm Password");
+            if (empty($firstName)) {
+                $errors[] = "'First Name' cannot be left empty" . "<br />";
+            }
+            if (empty($lastName)) {
+                $errors[] = "'Last Name' cannot be left empty" . "<br />";
+            }
+            if (empty($username)) {
+                $errors[] = "'Username' cannot be left empty" . "<br />";
+            }
+            if (empty($email)) {
+                $errors[] = "'Email' cannot be left empty" . "<br />";
+            }
+            if (empty($password)) {
+                $errors[] = "'Password' cannot be left empty" . "<br />";
+            }
+            if (empty($confirmPassword)) {
+                $errors[] = "'Confirm Password' cannot be left empty" . "<br />";
+            }
 
             // Check minimum length of the value
-            $errors[] = isMinimum($firstName, "First Name", $min);
-            $errors[] = isMinimum($lastName, "Last Name", $min);
-            $errors[] = isMinimum($username, "Username", $min);
-            $errors[] = isMinimum($password, "Password", $min);
+            if (strlen($firstName) < $minimumValue) {
+                $errors[] = "'First Name' cannot be less than {$minimumValue} characters." . "<br />";
+            }
+            if (strlen($lastName) < $minimumValue) {
+                $errors[] = "'Last Name' cannot be less than {$minimumValue} characters." . "<br />";
+            }
+            if (strlen($username) < $minimumValue) {
+                $errors[] = "'Username' cannot be less than {$minimumValue} characters." . "<br />";
+            }
+            if (strlen($password) < $minimumValue) {
+                $errors[] = "'Password' cannot be less than {$minimumValue} characters." . "<br />";
+            }
 
             // Check maximum length of the value
-            $errors[] = isMaximum($firstName, "First Name", $max);
-            $errors[] = isMaximum($lastName, "Last Name", $max);
-            $errors[] = isMaximum($username, "Username", $max);
-            $errors[] = isMaximum($password, "Password", $max);
+            if (strlen($firstName) > $maximumValue) {
+                $errors[] = "'First Name' cannot be less than {$maximumValue} characters." . "<br />";
+            }
+            if (strlen($lastName) > $maximumValue) {
+                $errors[] = "'Last Name' cannot be less than {$maximumValue} characters." . "<br />";
+            }
+            if (strlen($username) > $maximumValue) {
+                $errors[] = "'Username' cannot be less than {$maximumValue} characters." . "<br />";
+            }
+            if (strlen($password) > $maximumValue) {
+                $errors[] = "'Password' cannot be less than {$maximumValue} characters." . "<br />";
+            }
 
+            // Check if Password field matches with Confirm Password field
             if ($password !== $confirmPassword) {
                 $errors[] = "Your password fields don't match." . "<br />";
             }
 
+            // Check whether Email exists or not
             if (emailExists($email)) {
                 $errors[] = "Sorry, Email is already registered!" . "<br />";
             }
 
+            // Check whether Username exists or not
             if (usernameExists($username)) {
                 $errors[] = "Sorry, Username is already taken!" . "<br />";
             }
@@ -62,9 +93,9 @@
 
                 echo '</div>';
             } else {
-                if (registerUser($firstName, $lastName, $username, $email, $password)) {
-                    echo "USER REGISTERED!";
-                }
+                 if (registerUser($firstName, $lastName, $username, $email, $password)) {
+                     echo "USER REGISTERED!";
+                 }
             }
         }
     } // validateRegistration();

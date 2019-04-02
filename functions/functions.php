@@ -12,11 +12,7 @@
     }
 
     function setMessage($message) {
-        if (!empty($message)) {
-            $_SESSION['message'] = $message;
-        } else {
-            $message = "";
-        }
+        (!empty($message)) ? $_SESSION['message'] = $message : $message = "";
     }
 
     function displayMessage() {
@@ -84,20 +80,12 @@ DELIMITER;
         $sql = "SELECT id FROM users WHERE  email = '$email'";
         $result = query($sql);
 
-        if (rowCount($result) == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        (rowCount($result) == 1) ? true : false;
     }
 
     function usernameExists($username) {
         $sql = "SELECT id FROM users WHERE username = '$username'";
         $result = query($sql);
 
-        if (rowCount($result) == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        (rowCount($result) == 1) ? true : false;
     }

@@ -61,17 +61,11 @@
     }
 
     function isEmpty($inputName, $inputPlaceholder) {
-        $errors = [];
-
         if (empty($inputName)) {
-            $errors[] = "'{$inputPlaceholder}' cannot be empty" . "<br />";
+            $error = "'{$inputPlaceholder}' cannot be empty" . "<br />";
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                return $error;
-            }
-        }
+        return $error;
     }
 
     function validationErrors($errorMessage) {

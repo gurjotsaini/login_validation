@@ -24,4 +24,4 @@
     require_once "db_functions.php";
     require_once "functions.php";
     require_once "validation_functions.php";
-
+    require_once "activation_functions.php";

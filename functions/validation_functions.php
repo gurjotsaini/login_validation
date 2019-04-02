@@ -171,6 +171,11 @@ function validateLogin() {
 
         echo '</div>';
     } else {
-//        Code here
+        if (loginUser($email, $password)) {
+            redirect("admin.php");
+        }
+        if (!loginUser($email, $password)) {
+            echo validationErrors("Your credentials are not correct");
+        }
     }
 }

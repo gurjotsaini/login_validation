@@ -140,3 +140,37 @@ function sendMail($email, $subject, $message, $headers)
 {
     return mail($email, $subject, $message, $headers);
 }
+
+function validateLogin() {
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $email      = clean($_POST['email']);
+        $password   = clean($_POST['password']);
+    }
+
+    if (empty($email)) {
+        $errors[] = "Email field cannot be left empty.";
+    }
+
+    if (empty($password)) {
+        $errors[] = "Password field cannot be left empty.";
+    }
+
+    if (!empty($errors)) {
+        echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="alert-heading">Warning!</h4>
+             ';
+
+        foreach ($errors as $error) {
+            echo $error;
+        }
+
+        echo '</div>';
+    } else {
+//        Code here
+    }
+}

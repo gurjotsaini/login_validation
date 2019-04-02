@@ -96,6 +96,9 @@
                  if (registerUser($firstName, $lastName, $username, $email, $password)) {
                      setMessage("<p class='bg-success text-center'>Please check your email or span folder for activation link</p>");
                      redirect("index.php");
+                 } else {
+                     setMessage("<p class='bg-danger text-center'>Sorry! We couldn't register the user.</p>");
+                     redirect("index.php");
                  }
             }
         }
@@ -126,7 +129,7 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
         $message = "Please click the link below to activate your account
         https://loginvalidation.work:8890/activate.php?email=$email&code=$validationCode";
         $headers = "From: noreply@website.com";
-        
+
         sendMail($email, $subject, $message, $headers);
 
         return true;

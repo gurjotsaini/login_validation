@@ -2,7 +2,10 @@
 <?php require "includes/nav.php"; ?>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-        <?php displayMessage(); ?>
+        <?php
+            displayMessage();
+            validateLogin();
+        ?>
     </div>
 </div>
 <div class="row">

@@ -145,8 +145,9 @@ function validateLogin() {
     $errors = [];
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $email      = clean($_POST['email']);
-        $password   = clean($_POST['password']);
+        $email          = clean($_POST['email']);
+        $password       = clean($_POST['password']);
+        $rememberMe     = isset($_POST['remember']);
     }
 
     if (empty($email)) {
@@ -171,7 +172,7 @@ function validateLogin() {
 
         echo '</div>';
     } else {
-        if (loginUser($email, $password)) {
+        if (loginUser($email, $password, $rememberMe)) {
             redirect("admin.php");
         } else {
             echo validationErrors("Your credentials are not correct");

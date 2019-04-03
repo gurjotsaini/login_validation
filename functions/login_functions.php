@@ -3,7 +3,7 @@
      * Created by User: gurjot
      */
 
-    function loginUser($email, $password) {
+    function loginUser($email, $password, $rememberMe) {
         $sql = "SELECT password, id FROM users WHERE email = '".escape($email)."' AND active = 1";
         $result = query($sql);
         confirmQuery($result);
@@ -13,7 +13,12 @@
             $dbPassword = $row['password'];
 
             if (md5($password) === $dbPassword) {
+                if ($rememberMe == "on") {
+                    setcookie('email', $email, time() + 86400);
+                }
+
                 $_SESSION['email'] = $email;
+
                 return true;
             } else {
                 return false;

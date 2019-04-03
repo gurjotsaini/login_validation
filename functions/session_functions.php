@@ -4,7 +4,7 @@
      */
 
     function loggedIn() {
-        if (isset($_SESSION['email'])) {
+        if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
             return true;
         } else {
             return false;

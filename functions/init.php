@@ -26,3 +26,4 @@
     require_once "validation_functions.php";
     require_once "activation_functions.php";
     require_once "login_functions.php";
+    require_once "session_functions.php";

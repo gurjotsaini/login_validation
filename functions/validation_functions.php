@@ -150,11 +150,11 @@ function validateLogin() {
     }
 
     if (empty($email)) {
-        $errors[] = "Email field cannot be left empty.";
+        $errors[] = "Email field cannot be left empty. <br />";
     }
 
     if (empty($password)) {
-        $errors[] = "Password field cannot be left empty.";
+        $errors[] = "Password field cannot be left empty. <br />";
     }
 
     if (!empty($errors)) {
@@ -173,8 +173,7 @@ function validateLogin() {
     } else {
         if (loginUser($email, $password)) {
             redirect("admin.php");
-        }
-        if (!loginUser($email, $password)) {
+        } else {
             echo validationErrors("Your credentials are not correct");
         }
     }

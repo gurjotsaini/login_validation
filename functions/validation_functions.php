@@ -182,8 +182,28 @@ function validateLogin() {
 
 function validateResetCode() {
     if (isset($_COOKIE['temp_access_code'])) {
+        if (isset($_GET['email']) && isset($_GET['code'])) {
+            redirect("index.php");
+        } elseif (empty($_GET['email']) || empty($_GET['code'])) {
+            redirect("index.php");
+        } else {
+            if (isset($_POST['code'])) {
+                $email          = clean($_GET['email']);
+                $validationCode = clean($_POST['code']);
 
+                $sql = "SELECT id FROM users WHERE validation_code = '". escape($validationCode) ."' AND email = '". escape($email) ."'";
+                $result = query($sql);
+                confirmQuery($result);
+
+                if (rowCount($result) == 1) {
+                    redirect("reset.php");
+                } else {
+                    echo validationErrors("Sorry! Wrong validation code.");
+                }
+            }
+        }
     } else {
+        setMessage("<p class='bg-danger text-center'>Sorry, validation cookie expired.</p>");
         redirect("recover.php");
     }
 }

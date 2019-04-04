@@ -1,7 +1,9 @@
 <?php require "includes/header.php"; ?>
+<?php if (loggedIn()) { redirect("admin.php"); } ?>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
         <div class="alert-placeholder">
+            <?php displayMessage(); ?>
             <?php recoverPassword(); ?>
         </div>
         <div class="panel panel-success">
@@ -18,7 +20,7 @@
                                 <div class="row">
 
                                     <div class="col-lg-6 col-sm-6 col-xs-6">
-                                        <input type="submit" name="cancel-submit" id="cencel-submit" tabindex="2" class="form-control btn btn-danger" value="Cancel" />
+                                        <input type="submit" name="cancel_submit" id="cencel-submit" tabindex="2" class="form-control btn btn-danger" value="Cancel" />
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-6">
                                         <input type="submit" name="recover-submit" id="recover-submit" tabindex="2" class="form-control btn btn-success" value="Send Password Reset Link" />

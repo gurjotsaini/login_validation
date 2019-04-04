@@ -1,4 +1,5 @@
 <?php require "includes/header.php"; ?>
+<?php if (loggedIn()) { redirect("admin.php"); } ?>
 <?php require "includes/nav.php"; ?>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">

@@ -28,3 +28,4 @@
     require_once "login_functions.php";
     require_once "session_functions.php";
     require_once "recover_password.php";
+    require_once "reset_password.php";

@@ -11,7 +11,7 @@
                 if (emailExists($email)) {
                     $validationCode = md5($email . microtime());
 
-                    setcookie('temp_access_code', $validationCode, time() + 60);
+                    setcookie('temp_access_code', $validationCode, time() + 900);
 
                     $sql = "UPDATE users SET validation_code = '" . escape($validationCode) . "' WHERE email = '" . escape($email) . "'";
                     $result = query($sql);

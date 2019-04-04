@@ -27,7 +27,7 @@
                         echo validationErrors("Email couldn't be sent.");
                     }
 
-                    setMessage("<p class='bg-success'>Please check your email for password reset code.</p>");
+                    setMessage("<p class='bg-success text-center'>Please check your email for password reset code.</p>");
                     redirect("index.php");
                 } else {
                     echo validationErrors("This email does not exists.");

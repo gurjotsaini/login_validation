@@ -35,5 +35,9 @@
             } else {
                 redirect("index.php");
             }
+
+            if (isset($_POST['cancel_submit'])) {
+                redirect("login.php");
+            }
         }
     }

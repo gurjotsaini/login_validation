@@ -179,3 +179,11 @@ function validateLogin() {
         }
     }
 }
+
+function validateResetCode() {
+    if (isset($_COOKIE['temp_access_code'])) {
+
+    } else {
+        redirect("recover.php");
+    }
+}

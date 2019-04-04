@@ -196,7 +196,8 @@ function validateResetCode() {
                 confirmQuery($result);
 
                 if (rowCount($result) == 1) {
-                    redirect("reset.php");
+                    setcookie('temp_access_code', $validationCode, time() + 300);
+                    redirect("reset.php?email=$email&code=$validationCode");
                 } else {
                     echo validationErrors("Sorry! Wrong validation code.");
                 }

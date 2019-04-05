@@ -5,7 +5,7 @@
 
     require '../vendor/autoload.php';
 
-    function sendMail($email, $subject, $message, $headers)
+    function sendMail($email = null, $subject = null, $message = null, $headers = null)
     {
         $mail = new \PHPMailer\PHPMailer\PHPMailer();
 
@@ -21,9 +21,9 @@
 
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+        $mail->AltBody = $message;
 
         if (!$mail->send()) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

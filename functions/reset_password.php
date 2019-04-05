@@ -9,7 +9,7 @@
                 if ( isset($_SESSION['token']) && isset($_POST['token'])) {
                     if ($_POST['token'] === $_SESSION['token']) {
                         if ($_POST['password'] === $_POST['confirm_password']) {
-                            $updatedPassword = md5($_POST['password']);
+                            $updatedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost'=>12));
 
                             $sql = "UPDATE users SET password = '".escape($updatedPassword)."', validation_code = 0 WHERE email = '".escape($_GET['email'])."'";
                             $result = query($sql);

@@ -17,6 +17,8 @@
 
                             setMessage("<p class='bg-success text-center'>Your password has been updated. Please Login.</p>");
                             redirect("login.php");
+                        } else {
+                            echo validationErrors("Password fields don't match.");
                         }
                     }
                 }

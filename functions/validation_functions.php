@@ -116,7 +116,7 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
     } elseif (usernameExists($username)) {
         return false;
     } else {
-        $password = md5($password);
+        $password = password_hash($password, PASSWORD_BCRYPT, array('cost'=>12));
         $validationCode = md5($username . microtime());
 
         $sql = "INSERT INTO users(first_name, last_name, username, email, password, validation_code, active)";
@@ -127,7 +127,7 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
 
         $subject = "Activate Account";
         $message = "Please click the link below to activate your account
-        https://loginvalidation.work:8890/activate.php?email=$email&code=$validationCode";
+        <a href=\"". \App\Core\Config\Config::DEV_URL ."/activate.php?email=$email&code=$validationCode\"></a>";
         $headers = "From: noreply@website.com";
 
         sendMail($email, $subject, $message, $headers);

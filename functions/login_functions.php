@@ -12,7 +12,7 @@
             $row = fetchArray($result);
             $dbPassword = $row['password'];
 
-            if (md5($password) === $dbPassword) {
+            if (password_verify($password, $dbPassword)) {
                 if ($rememberMe == "on") {
                     setcookie('email', $email, time() + 86400);
                 }

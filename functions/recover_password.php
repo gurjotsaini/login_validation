@@ -23,9 +23,7 @@
                                 <a class='btn btn-outline-primary' href='https://loginvalidation.work:8890/code.php?email=$email&code=$validationCode'>Click Here</a>";
                     $headers = "From: noreply@website.com";
 
-                    if (!sendMail($email, $subject, $message, $headers)) {
-                        echo validationErrors("Email couldn't be sent.");
-                    }
+                    sendMail($email, $subject, $message, $headers);
 
                     setMessage("<p class='bg-success text-center'>Please check your email for password reset code.</p>");
                     redirect("index.php");

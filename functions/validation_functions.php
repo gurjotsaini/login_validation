@@ -136,11 +136,6 @@ function registerUser($firstName, $lastName, $username, $email, $password) {
     }
 } // registerUser();
 
-function sendMail($email, $subject, $message, $headers)
-{
-    return mail($email, $subject, $message, $headers);
-}
-
 function validateLogin() {
     $errors = [];
 

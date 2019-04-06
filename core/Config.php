@@ -3,7 +3,7 @@
      * Created by User: gurjot
      */
 
-    namespace App\Core\Config;
+    namespace App\Core;
 
     class Config
     {

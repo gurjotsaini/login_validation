@@ -37,6 +37,7 @@
     // Including Database Classes
     require_once "core/DatabaseClass/DbConnection.php";
     require_once "core/DatabaseClass/DbHelperMethods.php";
+    require_once "core/DatabaseClass/DbQueries.php";
 
         // Checking Database Connection
         $dbClass = new \App\Core\DatabaseClass\DbConnection();
@@ -44,3 +45,8 @@
 
     // Including Mail Class
     require_once "core/MailClass/Mail.php";
+
+    // Including Login Classes
+    require_once "core/LoginClasses/Login.php";
+    require_once "core/LoginClasses/Register.php";
+    require_once "core/LoginClasses/Activate.php";

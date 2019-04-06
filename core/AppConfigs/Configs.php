@@ -20,10 +20,16 @@
             'production_url'    =>  'https://siteurl.com'
         ];
 
+        /**
+         * @return array
+         */
         public static function getSmtpConfig() {
             return self::SMTP_CONFIG;
         }
 
+        /**
+         * @return array
+         */
         public static function getSiteUrl() {
             return self::SITE_URLS;
         }

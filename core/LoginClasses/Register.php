@@ -15,6 +15,7 @@
         public function validateRegistration() {
             $dbQueries      = new DbQueries();
             $sessionClass   = new Session();
+
             $errors         = [];
             $minimumValue   = 3;
             $maximumValue   = 20;

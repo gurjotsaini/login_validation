@@ -46,7 +46,9 @@
     // Including Mail Class
     require_once "core/MailClass/Mail.php";
 
+    // Including Session Class
+    require_once "core/SessionClasses/Session.php";
+
     // Including Login Classes
     require_once "core/LoginClasses/Login.php";
     require_once "core/LoginClasses/Register.php";
-    require_once "core/LoginClasses/Activate.php";

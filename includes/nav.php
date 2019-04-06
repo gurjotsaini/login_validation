@@ -12,10 +12,6 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
-                <?php if (loggedIn()): ?>
-                    <li><a href="admin.php">Admin</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                <?php endif; ?>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

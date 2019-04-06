@@ -3,9 +3,10 @@
      * Created by User: gurjot
      */
 
-    namespace App\Core\MailClass\Mail;
+    namespace App\Core\MailClass;
+
     use PHPMailer\PHPMailer\PHPMailer;
-    use App\Core\Config\Config;
+    use App\Core\Config;
 
     class Mail
     {

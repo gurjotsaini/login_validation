@@ -3,7 +3,7 @@
      * Created by User: gurjot
      */
 
-    require '../vendor/autoload.php';
+    //require '../vendor/autoload.php';
 
     function sendMail($email = null, $subject = null, $message = null, $headers = null)
     {

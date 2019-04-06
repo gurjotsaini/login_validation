@@ -1,4 +1,4 @@
-<?php require "functions/init.php"; ?>
+<?php require "init.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

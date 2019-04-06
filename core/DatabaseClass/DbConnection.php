@@ -4,30 +4,50 @@
      */
 
     namespace App\Core\DatabaseClass;
-    use App\Core\DatabaseClass\DbConfig;
-    use mysql_xdevapi\Exception;
 
     class DbConnection
     {
-        private $connect;
-        private $dbConfig;
-
         public function connectWithDatabase() {
-            try {
-                $this->dbConfig = DbConfig::getDbConfig();
-                $this->connect  = mysqli_connect(
-                    $this->dbConfig['host'],
-                    $this->dbConfig['username'],
-                    $this->dbConfig['password'],
-                    $this->dbConfig['database_name'],
-                    $this->dbConfig['port']
-                );
+            // Define connection as a static variable, to avoid connecting more than once
+            static $connection;
 
-                if ( !$this->connect ) {
-                    die( "Something went wrong! Try Again!" );
-                }
-            } catch ( Exception $e ) {
-                die( "Connection Error: " . $e->getMessage() . "<br />" );
+            // Try and connect to the database, if a connection has not been established yet
+            if(!isset($connection)) {
+                // Load configuration as an array. Use the actual location of your configuration file
+                $config = parse_ini_file('config.ini');
+
+                $connection = mysqli_connect(
+                    $config['host'],
+                    $config['username'],
+                    $config['password'],
+                    $config['database_name'],
+                    $config['port']
+                );
+            }
+
+            // If connection was not successful, handle the error
+            if($connection === false) {
+                // Handle error - notify administrator, log to a file, show an error screen, etc.
+                return mysqli_connect_error();
+            }
+
+            return $connection;
+        }
+
+        public function checkConnection() {
+            $connection = $this->connectWithDatabase();
+
+            // Check connection
+            if ($connection->connect_error) {
+                die("Connection failed: " . $connection->connect_error);
+            }
+        }
+
+        public function closeConnection() {
+            $connection = $this->connectWithDatabase();
+
+            if ($connection) {
+                $connection->close();
             }
         }
     }

@@ -31,6 +31,16 @@
     require_once "functions/recover_password.php";
     require_once "functions/reset_password.php";
 
-    // Including Classes
-    require_once "core/Config.php";
-    require_once "core/DatabaseClass/DbConfig.php";
+    // Including App Config Class
+    require_once "core/AppConfigs/Configs.php";
+
+    // Including Database Classes
+    require_once "core/DatabaseClass/DbConnection.php";
+    require_once "core/DatabaseClass/DbHelperMethods.php";
+
+        // Checking Database Connection
+        $dbClass = new \App\Core\DatabaseClass\DbConnection();
+        $dbClass->checkConnection();
+
+    // Including Mail Class
+    require_once "core/MailClass/Mail.php";

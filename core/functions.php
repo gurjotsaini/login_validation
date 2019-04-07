@@ -1,6 +1,7 @@
 <?php
     /**
      * Created by User: gurjot
+     * @param $location
      */
 
     function redirect($location) {

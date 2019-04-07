@@ -23,7 +23,7 @@
     // Including Important Files
     require_once "functions/db_functions.php";
     require_once "functions/send_mail.php";
-    require_once "functions/functions.php";
+    require_once "core/functions.php";
     require_once "functions/validation_functions.php";
     require_once "functions/activation_functions.php";
     require_once "functions/login_functions.php";
@@ -52,3 +52,6 @@
     // Including Login Classes
     require_once "core/LoginClasses/Login.php";
     require_once "core/LoginClasses/Register.php";
+
+    // Including HTML Classes
+    require_once "core/HtmlClasses/FormSanitizations.php";

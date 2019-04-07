@@ -4,16 +4,21 @@
      */
 
     namespace App\Core\LoginClasses;
+
     use App\Core\DatabaseClass\DbHelperMethods;
     use App\Core\DatabaseClass\DbQueries;
     use App\Core\AppConfigs\Configs;
     use App\Core\MailClass\Mail;
     use App\Core\SessionClasses\Session;
+    use App\Core\HtmlClasses\FormSanitizations;
 
     class Register
     {
+        /**
+         * Validate registration
+         */
         public function validateRegistration() {
-            $dbQueries      = new DbQueries();
+            $formFunctions  = new FormSanitizations();
             $sessionClass   = new Session();
 
             $errors         = [];
@@ -21,12 +26,12 @@
             $maximumValue   = 20;
 
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                $firstName          = clean($_POST['first_name']);
-                $lastName           = clean($_POST['last_name']);
-                $username           = clean($_POST['username']);
-                $email              = clean($_POST['email']);
-                $password           = clean($_POST['password']);
-                $confirmPassword    = clean($_POST['confirm_password']);
+                $firstName          =   $formFunctions->clean($_POST['first_name']);
+                $lastName           =   $formFunctions->clean($_POST['last_name']);
+                $username           =   $formFunctions->clean($_POST['username']);
+                $email              =   $formFunctions->clean($_POST['email']);
+                $password           =   $formFunctions->clean($_POST['password']);
+                $confirmPassword    =   $formFunctions->clean($_POST['confirm_password']);
 
                 // Check minimum length of the value
                 if (strlen($firstName) < $minimumValue) {
@@ -62,12 +67,12 @@
                 }
 
                 // Check whether Email exists or not
-                if ($dbQueries->emailExists("users", $email)) {
+                if (DbQueries::emailExists("users", $email)) {
                     $errors[] = "Sorry, Email is already registered!" . "<br />";
                 }
 
                 // Check whether Username exists or not
-                if ($dbQueries->usernameExists("users", $username)) {
+                if (DbQueries::usernameExists("users", $username)) {
                     $errors[] = "Sorry, Username is already taken!" . "<br />";
                 }
 
@@ -95,19 +100,26 @@
             }
         } // validateRegistration();
 
-        public function register($firstName, $lastName, $username, $email, $password) {
-            $dbQueries  = new DbQueries();
+        /**
+         * @param $firstName
+         * @param $lastName
+         * @param $username
+         * @param $email
+         * @param $password
+         * @return bool
+         */
+        public function register( $firstName, $lastName, $username, $email, $password) {
             $config     = Configs::getSiteUrl();
 
-            $firstName  = escape($firstName);
-            $lastName   = escape($lastName);
-            $username   = escape($username);
-            $email      = escape($email);
-            $password   = escape($password);
+            $firstName  = DbHelperMethods::escape($firstName);
+            $lastName   = DbHelperMethods::escape($lastName);
+            $username   = DbHelperMethods::escape($username);
+            $email      = DbHelperMethods::escape($email);
+            $password   = DbHelperMethods::escape($password);
 
-            if ($dbQueries->emailExists("users", $email)) {
+            if (DbQueries::emailExists("users", $email)) {
                 return false;
-            } elseif ($dbQueries->usernameExists("users", $username)) {
+            } elseif (DbQueries::usernameExists("users", $username)) {
                 return false;
             } else {
                 $password = password_hash($password, PASSWORD_BCRYPT, array('cost'=>12));

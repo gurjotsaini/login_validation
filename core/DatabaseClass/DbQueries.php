@@ -8,19 +8,39 @@
 
     class DbQueries
     {
-        public function emailExists($tableName, $email) {
+        /**
+         * @param $tableName
+         * @param $email
+         * @return bool
+         */
+        public static function emailExists( $tableName, $email) {
             $sql = "SELECT id FROM '". $tableName ."' WHERE  email = '$email'";
             $result = DbHelperMethods::query($sql);
             DbHelperMethods::confirmQuery($result);
 
-            (DbHelperMethods::rowCount($result) == 1) ? true : false;
+            if (DbHelperMethods::rowCount($result) == 1)
+            {
+                return true;
+            } else {
+                return false;
+            }
         }
 
-        public function usernameExists($tableName, $username) {
+        /**
+         * @param $tableName
+         * @param $username
+         * @return bool
+         */
+        public static function usernameExists( $tableName, $username) {
             $sql = "SELECT id FROM '". $tableName ."' users WHERE username = '$username'";
             $result = DbHelperMethods::query($sql);
             DbHelperMethods::confirmQuery($result);
 
-            (DbHelperMethods::rowCount($result) == 1) ? true : false;
+            if (DbHelperMethods::rowCount($result) == 1)
+            {
+                return true;
+            } else {
+                return false;
+            }
         }
     }

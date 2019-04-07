@@ -40,7 +40,7 @@
     require_once "core/DatabaseClass/DbQueries.php";
 
         // Checking Database Connection
-        $dbClass = new \App\Core\DatabaseClass\DbConnection();
+        $dbClass = new App\Core\DatabaseClass\DbConnection();
         $dbClass->checkConnection();
 
     // Including Mail Class
@@ -55,3 +55,4 @@
 
     // Including HTML Classes
     require_once "core/HtmlClasses/FormSanitizations.php";
+    require_once "core/HtmlClasses/DisplayErrors.php";

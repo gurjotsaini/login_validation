@@ -7,6 +7,9 @@
 
     class DbConnection
     {
+        /**
+         * @return false|\mysqli|string
+         */
         public function connectWithDatabase() {
             // Define connection as a static variable, to avoid connecting more than once
             static $connection;
@@ -14,7 +17,7 @@
             // Try and connect to the database, if a connection has not been established yet
             if(!isset($connection)) {
                 // Load configuration as an array. Use the actual location of your configuration file
-                $config = parse_ini_file('../AppConfigs/config.ini');
+                $config = parse_ini_file('config.ini');
 
                 $connection = mysqli_connect(
                     $config['host'],
@@ -34,6 +37,9 @@
             return $connection;
         }
 
+        /**
+         *
+         */
         public function checkConnection() {
             $connection = $this->connectWithDatabase();
 
@@ -43,6 +49,9 @@
             }
         }
 
+        /**
+         *
+         */
         public function closeConnection() {
             $connection = $this->connectWithDatabase();
 

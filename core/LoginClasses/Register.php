@@ -15,13 +15,14 @@
     class Register
     {
         /**
-         * Validate registration
+         * Validate registration method
          */
         public function validateRegistration() {
             $formFunctions  = new FormSanitizations();
             $sessionClass   = new Session();
 
             $errors         = [];
+
             $minimumValue   = 3;
             $maximumValue   = 20;
 
@@ -133,7 +134,7 @@
 
                 $subject = "Activate Account";
                 $message = "Please click the link below to activate your account
-                <a href=\"". $config['development_url'] ."/activate.php?email=$email&code=$validationCode\">Link Here</a>";
+                <a class='btn btn-outline-primary' href=\"". $config['development_url'] ."/activate.php?email=$email&code=$validationCode\">Link Here</a>";
                 $headers = "From: noreply@website.com";
 
                 Mail::sendMail($email, $subject, $message, $headers);
@@ -141,4 +142,35 @@
                 return true;
             }
         } // registerUser();
+
+        /**
+         *
+         */
+        public function activateUser() {
+            if ($_SERVER['REQUEST_METHOD'] == "GET") {
+                if (isset($_GET['email'])) {
+                    $formSanitize = new FormSanitizations();
+                    $sessionClass   = new Session();
+
+                    $email             = $formSanitize->clean($_GET['email']);
+                    $validationCode    = $formSanitize->clean($_GET['code']);
+
+                    $sql = "SELECT id FROM users WHERE email = '". DbHelperMethods::escape($_GET['email']) ."' AND validation_code = '". DbHelperMethods::escape($_GET['code']) ."' ";
+                    $result = DbHelperMethods::query($sql);
+                    DbHelperMethods::confirmQuery($result);
+
+                    if (DbHelperMethods::rowCount($result) == 1){
+                        $sql2 = "UPDATE users SET active = 1, validation_code = 0 WHERE email = '". DbHelperMethods::escape($email) ."' AND validation_code = '". DbHelperMethods::escape($validationCode) ."' ";
+                        $result2 = DbHelperMethods::query($sql2);
+                        DbHelperMethods::confirmQuery($result2);
+
+                        $sessionClass->setMessage("<p class='bg-success'>Your account has been activated. Please Login</p>");
+                        redirect("login.php");
+                    } else {
+                        $sessionClass->setMessage("<p class='bg-danger'>Sorry! Your account couldn't be activated.</p>");
+                        redirect("login.php");
+                    }
+                }
+            }
+        } // activateUser()
     }

@@ -5,15 +5,23 @@
 
     namespace App\Core\LoginClasses;
     use App\Core\DatabaseClass\DbHelperMethods;
+    use App\Core\HtmlClasses\FormSanitizations;
+    use App\Core\HtmlClasses\DisplayErrors;
 
     class Login
     {
+        /**
+         * Validate login method
+         */
         public function validateLogin() {
+            $formSanitize       = new FormSanitizations();
+            $validationClass    = new DisplayErrors();
+
             $errors = [];
 
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                $email          = clean($_POST['email']);
-                $password       = clean($_POST['password']);
+                $email          = $formSanitize->clean($_POST['email']);
+                $password       = $formSanitize->clean($_POST['password']);
                 $rememberMe     = isset($_POST['remember']);
             }
 
@@ -42,7 +50,7 @@
                 if ($this->login($email, $password, $rememberMe)) {
                     redirect("admin.php");
                 } else {
-                    echo validationErrors("Your credentials are not correct");
+                    echo $validationClass->validationErrors("Your credentials are not correct");
                 }
             }
         }
@@ -54,7 +62,7 @@
          * @return bool
          */
         public function login ( $email, $password, $rememberMe) {
-            $sql = "SELECT password, id FROM users WHERE email = '" . escape($email) . "' AND active = 1";
+            $sql = "SELECT password, id FROM users WHERE email = '" . DbHelperMethods::escape($email) . "' AND active = 1";
             $result = DbHelperMethods::query($sql);
             DbHelperMethods::confirmQuery($result);
 
